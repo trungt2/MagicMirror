@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
+    <title>Thay đổi tên</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Tên hiện tại: {{ current_name }}</h1>
+        <h2>Tên bạn nhập vào: {{ new_name }}</h2>
+        <p>Bạn muốn giữ tên hiện tại hay lấy tên đã nhập vào?</p>
+        <form action="/change_name" method="post">
+            <input type="hidden" name="current_name" value="{{ current_name }}">
+            <input type="hidden" name="new_name" value="{{ new_name }}">
+            <button type="submit" name="action" value="keep">Giữ tên hiện tại</button>
+            <button type="submit" name="action" value="change">Thay đổi thành tên mới</button>
+        </form>
+    </div>
+</body>
+</html>

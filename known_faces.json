@@ -1,0 +1,16 @@
+{
+    "people": [
+        {
+            "name": "Trung",
+            "image_path": "Photos-001/Trung"
+        },
+        {
+            "name": "Messi",
+            "image_path": "Photos-001/Messi"
+        },
+        {
+            "name": "my",
+            "image_path": "Photos-001/my"
+        }
+    ]
+}

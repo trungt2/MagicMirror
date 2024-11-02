@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Giao Diện</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Kiểm tra khuôn mặt</h1>
+
+        <div id="loading-message" style="display: none;">
+            <p>Đang huấn luyện, vui lòng đợi...</p>
+        </div>
+
+        <form id="train-form">
+            <button type="button" onclick="startTraining()">Train</button>
+        </form>
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Enter name" required>
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">Upload name, image</button>
+        </form>
+
+        <div id="check-section">
+            <button onclick="checkNames()">Check name</button>
+            <div id="name-list" style="display: none;">
+                <h3>Danh sách các tên đã có:</h3>
+                <ul id="names"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startTraining() {
+            document.getElementById('loading-message').style.display = 'block';
+
+            fetch('/train', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('loading-message').style.display = 'none';
+                    window.location.href = '/train_complete';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('loading-message').style.display = 'none';
+                });
+        }
+        
+        function checkNames() {
+            fetch('/check_name')
+                .then(response => response.json())
+                .then(data => {
+                    const nameList = document.getElementById('names');
+                    nameList.innerHTML = '';
+                    data.names.forEach(name => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = name;
+                        nameList.appendChild(listItem);
+                    });
+                    document.getElementById('name-list').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
